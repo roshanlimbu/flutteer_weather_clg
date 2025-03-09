@@ -7,16 +7,17 @@ const apiUrl =
     "https://api.weatherapi.com/v1/current.json?key=8587a2cd4567457d9f615102250703&q=KTM";
 
 class WeatherRepo {
-  static Future<WeatherModel> getWeather() async {
+  static Future<WeatherModel?> getWeatherData() async {
     try {
       final response = await Dio().get(apiUrl);
+
       final data = response.data;
+
       final weatherModel = WeatherModel.fromJson(data);
 
       return weatherModel;
-    } on DioException catch (e) {
-      // ignore: use_rethrow_when_possible
-      throw e;
+    } on DioException {
+      rethrow;
     }
   }
 }
